@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "skipLibCheck": false, // Change this from true to false
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["client/src/**/*", "server/src/**/*"]
+}
