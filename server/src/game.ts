@@ -28,7 +28,6 @@ class PongGame {
   private readonly PADDLE_WIDTH = 15;
   private readonly BALL_SIZE = 15;
   private readonly BALL_SPEED = 400; // pixels per second
-  private readonly PADDLE_SPEED = 400; // pixels per second
 
   private state: GameState;
   private tickRate: number = 1000 / 60; // 60 FPS

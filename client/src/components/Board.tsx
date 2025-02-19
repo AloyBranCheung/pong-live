@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { GameState } from "../../../server/src/game";
 import styles from "./Board.module.css";
 import socket from "../socket";
