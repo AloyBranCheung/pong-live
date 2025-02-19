@@ -1,0 +1,8 @@
+.appContainer {
+  height: 100vh;
+  overflow: hidden;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
