@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
+//
+import PongGame from "./game";
 
-// init
+// initialize
 dotenv.config();
 const app = express();
 app.use(
@@ -19,19 +21,37 @@ const io = new Server(server, {
   },
 });
 const PORT = process.env.PORT || 3001;
+const pongGame = new PongGame();
 
 // io
 io.on("connection", (socket) => {
-  console.log("a user connected");
-  socket.on("disconnect", (reason) => {
-    console.log(reason);
-    console.log("a user disconnected");
+  console.log(`Player ${socket.id} connected.`);
+  // add player to game
+  const added = pongGame.addPlayer(socket);
+  if (!added) {
+    socket.emit("gameFull");
+    socket.disconnect();
+    return;
+  }
+  // handle player input
+  socket.on("playerMove", (direction: "up" | "down") => {
+    pongGame.movePlayer(socket.id, direction);
   });
 
-  socket.on("test-emit", (data) => {
-    console.log("server:", data);
+  socket.on("playerReady", () => {
+    pongGame.setPlayerReady(socket.id);
+    console.log(`Set Player ${socket.id} ready.`);
+  });
+
+  socket.on("disconnect", () => {
+    pongGame.removePlayer(socket.id);
+    console.log(`Player ${socket.id} disconnected.`);
   });
 });
+
+setInterval(() => {
+  io.emit("gameState", pongGame.getStateForClient());
+}, 1000 / 60); // 60 FPS
 
 //
 app.get("/api/health", (_, res) => {
