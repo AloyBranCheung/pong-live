@@ -1,14 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import socket from "./socket";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("connected to server");
+    });
+    socket.on("disconnect", () => {
+      console.log("disconnected from server");
+    });
+    socket.on("test-emit", (data) => {
+      console.log("client:", data);
+    });
+
+    return () => {
+      socket.off("connect", () => {});
+
+      socket.off("disconnect", () => {
+        console.log("disconnected from server");
+      });
+
+      socket.off("test-emit", (data) => {
+        console.log("client:", data);
+      });
+    };
+  }, []);
 
   return (
     <>
       <div>
+        <input onChange={(e) => socket.emit("test-emit", e.target.value)} />
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -29,7 +55,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

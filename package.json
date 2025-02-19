@@ -6,9 +6,9 @@
     "dev:client": "cd client && vite",
     "dev:server": "nodemon",
     "dev": "concurrently \"npm run dev:client\" \"nodemon server/src/index.ts\"",
-    "build": "cd client && tsc -b && vite build",
-    "lint": "eslint ./client",
-    "preview": "cd client && vite preview"
+    "build:client": "cd client && tsc -b && vite build",
+    "lint:client": "eslint ./client",
+    "preview:client": "cd client && vite preview"
   },
   "keywords": [],
   "author": "",
@@ -17,10 +17,13 @@
   "dependencies": {
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
@@ -35,7 +38,7 @@
     "nodemon": "^3.1.9",
     "tsx": "^4.19.3",
     "typescript": "~5.7.2",
-    "typescript-eslint": "^8.22.0",
+    "typescript-eslint": "^8.24.1",
     "vite": "^6.1.0"
   }
 }
